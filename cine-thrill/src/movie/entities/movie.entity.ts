@@ -3,11 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinColumn,
   JoinTable,
 } from 'typeorm';
 import { Genre } from './genre.entity';
 import { Cast } from './cast.entity';
+import { User } from '@/users/entities/user.entity';
 
 @Entity()
 export class Movie {
@@ -17,15 +17,24 @@ export class Movie {
   @Column()
   title: string;
 
-  @ManyToMany(() => Genre, (genre) => genre.movies, { eager: true })
+  @ManyToMany(() => Genre, (genre) => genre.movies, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinTable()
   genres: Genre[];
 
-  @ManyToMany(() => Cast, (director) => director.movies, { eager: true })
+  @ManyToMany(() => Cast, (director) => director.movies, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinTable()
   directors: Cast[];
 
-  @ManyToMany(() => Cast, (actor) => actor.movies, { eager: true })
+  @ManyToMany(() => Cast, (actor) => actor.movies, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinTable()
   actors: Cast[];
 
@@ -46,4 +55,14 @@ export class Movie {
 
   @Column()
   released: string;
+
+  @ManyToMany(() => User, (viewer) => viewer.watchedMovies, {
+    onDelete: 'CASCADE',
+  })
+  viewers: User[];
+
+  @ManyToMany(() => User, (viewer) => viewer.likedMovies, {
+    onDelete: 'CASCADE',
+  })
+  likedBy: User[];
 }

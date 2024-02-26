@@ -8,6 +8,7 @@ import {
   HttpStatus,
   ParseUUIDPipe,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { MovieService } from '../services/movie.service';
 import { CreateMovieDto, createMovieSchema } from '../dto/create-movie.dto';
@@ -15,6 +16,7 @@ import { UpdateMovieDto, updateMovieSchema } from '../dto/update-movie.dto';
 import { Movie } from '../entities/movie.entity';
 import { ZodValidationPipe } from '../../core/validator';
 import { BaseResponse } from '@/core/base-response';
+import { AuthGuard } from '@/auth/guards/auth.guard';
 
 @Controller('movies')
 export class MovieController {
@@ -34,6 +36,7 @@ export class MovieController {
     return response;
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll() {
     const movies = await this.movieService.findAll();
