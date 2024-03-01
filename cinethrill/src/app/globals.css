@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .feathered-edge {
+    mask-image: radial-gradient(
+      circle at center center,
+      black 0%,
+      transparent 45%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at center center,
+      black 0%,
+      transparent 45%
+    );
+  }
+
+  .feathered-edge-linear {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 20%,
+      transparent 95%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 20%,
+      transparent 95%
+    );
+  }
+
+  @media screen and (min-width: 768px) {
+    .md\:.feathered-edge {
+      mask-image: radial-gradient(
+        circle at center center,
+        black 0%,
+        transparent 74%
+      );
+      -webkit-mask-image: radial-gradient(
+        circle at center center,
+        black 0%,
+        transparent 74%
+      );
+    }
+  }
+}
