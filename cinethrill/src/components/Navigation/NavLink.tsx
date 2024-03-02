@@ -1,17 +1,13 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 interface NavLinkProps {
   children: React.ReactNode;
   href: string;
+  isActive?: boolean;
 }
 
-export const NavLink = ({ children, href }: NavLinkProps) => {
-  const currentRoute = usePathname();
-
-  return currentRoute === href ? (
+export const NavLink = ({ children, href, isActive = false }: NavLinkProps) => {
+  return isActive ? (
     <Link
       className="relative flex items-center text-teal text-nowrap
 after:absolute after:bottom-0 after:h-[1px] after:w-full 

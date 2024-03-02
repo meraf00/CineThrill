@@ -3,7 +3,6 @@
 import { Movie } from '@/api/movies/movie';
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Poster } from './Poster';
-import { usePathname } from 'next/navigation';
 
 export interface SimilarMoviesListProps {
   movies: Movie[];
@@ -20,7 +19,7 @@ export const SimilarMoviesList = ({ movies }: SimilarMoviesListProps) => {
 flex items-end gap-10
 fixed bottom-0 right-0 h-1/3 w-1/2
 overflow-x-auto overflow-y-hidden no-scrollbar
-feathered-edge-linear"
+feathered-edge-linear-balanced"
     >
       {movies.map((movie, idx) => {
         if (idx === movies.length - 1) {

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { poppins } from '@/libs/fonts';
 import './globals.css';
-import { NavBar } from '@/components/Navigation/NavBar';
 
 export const metadata: Metadata = {
   title: 'CineThrill',
@@ -19,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-y-auto h-screen">
       <body
+        id="body"
         className={`relative text-foreground ${poppins.className} font-normal bg-gradient-to-b from-blueblack to-blueblack-light w-full overflow-x-hidden bg-fixed overflow-y-scroll h-full`}
       >
         {children}
