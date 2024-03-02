@@ -21,7 +21,7 @@ export const Poster = ({
   return (
     <div className="flex flex-col gap-2 cursor-pointer">
       <div
-        className={`shadow-lg shadow-gray-600 rounded-sm overflow-clip  ${cls}`}
+        className={`shadow-lg shadow-teal-dark rounded-sm overflow-clip  ${cls}`}
       >
         <Image
           className="object-contain w-full h-full"

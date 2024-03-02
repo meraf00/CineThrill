@@ -3,6 +3,7 @@
 import { Movie } from '@/api/movies/movie';
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Poster } from './Poster';
+import { usePathname } from 'next/navigation';
 
 export interface SimilarMoviesListProps {
   movies: Movie[];
@@ -24,9 +25,8 @@ feathered-edge-linear"
       {movies.map((movie, idx) => {
         if (idx === movies.length - 1) {
           return (
-            <div className="mr-72">
+            <div className="mr-72" key={movie.id}>
               <Poster
-                key={movie.id}
                 imageSrc={movie.poster}
                 title={movie.title}
                 isActive={selectedMovie === movie.id}

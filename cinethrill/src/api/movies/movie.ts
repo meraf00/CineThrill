@@ -5,4 +5,5 @@ export interface Movie {
   rating: string;
   description: string;
   poster: string;
+  progress?: number;
 }

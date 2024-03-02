@@ -1,161 +1,118 @@
-import {
-  MaterialSymbolsLightFavorite,
-  MaterialSymbolsLightStar,
-  MaterialSymbolsLightStarOutline,
-  RiPlayFill,
-} from '@/components/Icons';
-import { Poster } from '@/components/client/movie-detail/Poster';
-import { SimilarMoviesList } from '@/components/client/movie-detail/SimilarMoviesList';
-import Image from 'next/image';
+'use client';
+
+import { GrommetIconsFormPrevious, RiPlayFill } from '@/components/Icons';
+import { FancyButton } from '@/components/client/Button/FancyButton';
+import { Backdrop } from '@/components/client/home/Backdrop';
+import { MovieLeftOffCard } from '@/components/client/home/MovieLeftOffCard';
+
+import { protestRevolution } from '@/libs/fonts';
+import { useState } from 'react';
+
+const movies = [
+  {
+    title: 'Avengers : End Game',
+    poster: '/avengers.jpg',
+    id: '1',
+    year: '2021',
+    rating: '4.5',
+    description:
+      "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
+  },
+  {
+    title: 'The Witcher',
+    poster: '/the_witcher_poster.jpg',
+    id: '2',
+    year: '2021',
+    rating: '4.5',
+    description:
+      "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
+  },
+];
 
 export default function Home() {
+  const [movieIdx, setMovieIdx] = useState(0);
+
   return (
-    <main className="w-full h-[90vh] overflow-y-auto pt-14 px-40">
-      <Image
-        className="absolute -z-10 top-0 right-0 object-contain w-full h-full feathered-edge md:feathered-edge opacity-70"
-        src="/the_witcher_poster.jpg"
-        width={1185}
-        height={720}
-        alt="Movie poster"
-      />
-
-      {/* Title and season */}
-      <div className="flex flex-col gap-2 mb-4">
-        <h1 className="text-4xl tracking-wider font-black">The Witcher</h1>
-        <h2 className="font-bold">Season 1</h2>
-      </div>
-
-      {/* Starts */}
-      <div className="flex text-3xl -ml-[4px] mb-2">
-        <span className="flex text-yellow-500">
-          <MaterialSymbolsLightStar />
-          <MaterialSymbolsLightStar />
-          <MaterialSymbolsLightStar />
-          <MaterialSymbolsLightStar />
-        </span>
-        <span className="flex text-gray-400">
-          <MaterialSymbolsLightStarOutline />
-        </span>
-      </div>
-
-      {/* Genre */}
-      <div className="flex items-center gap-3 text-foreground-dark font-light text-sm mb-4">
-        <span>Crime</span>
-        <div className="w-[1px] h-[0.875rem] bg-foreground-dark"></div>
-        <span>Drama</span>
-        <div className="w-[1px] h-[0.875rem] bg-foreground-dark"></div>
-        <span>Mystery</span>
-      </div>
-
-      {/* Play, buy or add to favorite */}
-      <div className="flex my-4">
-        <button className="bg-teal-dark hover:bg-teal px-3 py-2 flex item-center justify-center text-2xl">
-          <RiPlayFill />
+    <main className="">
+      <section className="flex flex-col gap-20 items-center w-full h-[90vh]">
+        <button
+          className="absolute left-16 top-[50%] -translate-y-[50%] text-3xl hover:text-teal"
+          onClick={() =>
+            setMovieIdx((movieIdx) =>
+              movieIdx - 1 < 0 ? movies.length - 1 : movieIdx - 1
+            )
+          }
+        >
+          <GrommetIconsFormPrevious />
         </button>
-        <button className="bg-teal hover:bg-teal-light px-3 py-2 flex item-center justify-center text-2xl ">
-          <MaterialSymbolsLightFavorite />
+        <button
+          className="absolute right-16 top-[50%] -translate-y-[50%] text-3xl rotate-180 hover:text-teal"
+          onClick={() =>
+            setMovieIdx((movieIdx) =>
+              movieIdx + 1 >= movies.length ? 0 : movieIdx + 1
+            )
+          }
+        >
+          <GrommetIconsFormPrevious />
         </button>
-      </div>
 
-      {/* Plot */}
-      <div className="relative flex flex-col text-sm gap-4 w-1/2 text-opacity-80 text-foreground-dark tracking-wider leading-loose h-[15rem] overflow-y-auto no-scrollbar">
-        <div className="fixed bottom-0 h-[30%] w-1/2 bg-gradient-to-t from-blueblack-light to-transparent pointer-events-none"></div>
-        <p>
-          In the tumultuous land of Temeria, where monsters and political
-          intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself
-          entangled in a web of dark magic and forgotten history. The story
-          unfolds when Geralt receives a mysterious letter from an old friend,
-          Triss Merigold, a powerful sorceress. Triss reveals that a powerful
-          artifact, known as the "Eclipse Crystal," has resurfaced, and its dark
-          magic threatens to plunge the entire continent into chaos.
-        </p>
-        <p className="mb-32">
-          The Eclipse Crystal, a relic of ancient elven origin, possesses the
-          ability to manipulate time itself. Legend has it that whoever controls
-          the crystal can reshape history, bringing either salvation or
-          destruction to the world. Triss enlists Geralt's help to prevent the
-          crystal from falling into the wrong hands, especially those
-        </p>
-      </div>
+        {/* Backdrop */}
+        <Backdrop
+          images={movies.map((movie) => movie.poster)}
+          activeIdx={movieIdx}
+        />
 
-      {/* Similar movies */}
+        {/* Title and play trailer */}
+        <div className="flex flex-col gap-10 items-center justify-center mt-32">
+          <h1
+            className={`text-4xl tracking-wide font-black drop-shadow-2xl ${protestRevolution.className}`}
+          >
+            {movies[movieIdx].title}
+          </h1>
 
-      <SimilarMoviesList
-        movies={[
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '1',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '2',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '6',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '5',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '3',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '4',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '9',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-          {
-            poster: '/the_witcher_poster_1.jpg',
-            title: 'The Witcher',
-            id: '8',
-            year: '2021',
-            rating: '4.5',
-            description:
-              "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
-          },
-        ]}
-      ></SimilarMoviesList>
+          <FancyButton>
+            <span className="text-2xl flex justify-center items-center">
+              <RiPlayFill />
+            </span>
+            <span className="text-sm uppercase flex items-center justify-center font-semibold">
+              Watch Trailer
+            </span>
+          </FancyButton>
+        </div>
+
+        {/* Left off */}
+        <div className="flex flex-col gap-8 items-center">
+          <h2 className="uppercase text-xs font-semibold">You left them off</h2>
+
+          {/* List of left off */}
+          <div className="flex max-w-[46rem] gap-8 overflow-auto no-scrollbar">
+            {/* Left off card */}
+            <MovieLeftOffCard
+              movie={{
+                poster: '/the_witcher_poster_1.jpg',
+                title: 'The Witcher',
+                id: '1',
+                year: '2021',
+                rating: '4.5',
+                description:
+                  "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
+              }}
+            />
+            <MovieLeftOffCard
+              movie={{
+                poster: '/the_witcher_poster_1.jpg',
+                title: 'The Witcher',
+                id: '1',
+                year: '2021',
+                rating: '4.5',
+                description:
+                  "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
+                progress: 0.7,
+              }}
+            />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

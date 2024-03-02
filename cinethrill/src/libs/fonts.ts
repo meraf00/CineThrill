@@ -1,5 +1,5 @@
-import { Inter } from 'next/font/google';
-import { Poppins } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
+import localFont from 'next/font/local';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -13,4 +13,10 @@ export const poppins = Poppins({
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
   variable: '--font-poppins',
+});
+
+export const protestRevolution = localFont({
+  src: './fonts/Protest_Revolution/ProtestRevolution-Regular.ttf',
+  display: 'swap',
+  variable: '--font-protest-revolution',
 });

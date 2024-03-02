@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export const NavBar = () => {
   return (
-    <nav className="sticky top-0 flex justify-between px-16 bordeb border-gray-600 border-opacity-20 border-1 text-sm z-50 backdrop-blur-sm">
+    <nav className="sticky top-0 flex justify-between px-16 borde border-gray-600 border-opacity-20 border-1 text-sm z-50 backdrop-blur-sm">
       <Link href="/">
         <div className="flex item-center py-3 gap-2 font-medium text-teal text tracking-wide">
           <div className="w-fit h-fit my-auto">
