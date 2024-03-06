@@ -10,7 +10,7 @@ export const ACCEPTED_IMAGE_TYPES = [
 
 export const createHallSchema = z
   .object({
-    name: z.string(),
+    name: z.string().min(1),
   })
   .required();
 

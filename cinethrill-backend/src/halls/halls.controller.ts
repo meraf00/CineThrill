@@ -11,11 +11,19 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   UploadedFile,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { HallsService } from './halls.service';
-import { CreateHallDto, MAX_FILE_SIZE } from './dto/create-hall.dto';
-import { UpdateHallDto } from './dto/update-hall.dto';
+import {
+  CreateHallDto,
+  MAX_FILE_SIZE,
+  createHallSchema,
+} from './dto/create-hall.dto';
+import { UpdateHallDto, updateHallSchema } from './dto/update-hall.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ZodValidationPipe } from '@/shared/validator';
+import { BaseResponse } from '@/shared/base-response';
 
 @Controller('halls')
 export class HallsController {
@@ -24,7 +32,7 @@ export class HallsController {
   @Post()
   @UseInterceptors(FileInterceptor('seatMapImage'))
   create(
-    @Body() createHallDto: CreateHallDto,
+    @Body(new ZodValidationPipe(createHallSchema)) createHallDto: CreateHallDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -52,7 +60,7 @@ export class HallsController {
   @UseInterceptors(FileInterceptor('seatMapImage'))
   update(
     @Param('id') id: string,
-    @Body() updateHallDto: UpdateHallDto,
+    @Body(new ZodValidationPipe(updateHallSchema)) updateHallDto: UpdateHallDto,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -67,7 +75,12 @@ export class HallsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hallsService.remove(id);
+  async remove(@Param('id') id: string) {
+    await this.hallsService.remove(id);
+
+    const response = new BaseResponse();
+    response.statusCode = HttpStatus.NO_CONTENT;
+
+    return response;
   }
 }

@@ -42,6 +42,8 @@ export class HallsService {
 
     hall.name = updateHallDto.name ?? hall.name;
     if (file) {
+      await this.fileService.deleteAssets([hall.assetExternalId]);
+
       const { imageUrl, assetExternalId } =
         await this.fileService.uploadImage(file);
       hall.seatMapUrl = imageUrl;
@@ -51,7 +53,13 @@ export class HallsService {
     return this.hallRepository.save(hall);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} hall`;
+  async remove(id: string) {
+    const hall = await this.findOne(id);
+
+    if (!hall) throw new NotFoundException('Hall not found');
+
+    await this.fileService.deleteAssets([hall.assetExternalId]);
+
+    return this.hallRepository.remove(hall);
   }
 }

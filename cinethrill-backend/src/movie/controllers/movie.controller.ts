@@ -82,7 +82,6 @@ export class MovieController {
 
     const response = new BaseResponse();
     response.statusCode = HttpStatus.NO_CONTENT;
-    response.message = 'Movie deleted successfully.';
 
     return response;
   }

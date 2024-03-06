@@ -24,6 +24,26 @@ export class FilesService {
     });
   }
 
+  async deleteAssets(assetExternalIds: string[]): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      cloudinary.v2.api.delete_resources(
+        assetExternalIds,
+        (err: any, result: any) => {
+          if (err) {
+            console.error('Cloudinary delete error:', err);
+            reject('Cloudinary delete error');
+          }
+          if (!result) {
+            console.error('Cloudinary delete error: Result is undefined');
+            reject('Cloudinary delete error: Result is undefined');
+          }
+
+          resolve();
+        },
+      );
+    });
+  }
+
   async uploadImage(file: Express.Multer.File): Promise<UploadResult> {
     const resizedBuffer: Buffer = await sharp(file.buffer)
       .resize({ width: 800, height: 600 })
