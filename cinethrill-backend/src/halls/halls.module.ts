@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HallsService } from './halls.service';
-import { HallsController } from './halls.controller';
+import { HallsService } from './services/halls.service';
+import { HallsController } from './controllers/halls.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Hall } from './entities/hall.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
-import { FilesService } from '@/files/files.service';
 import { FilesModule } from '@/files/files.module';
 
 @Module({

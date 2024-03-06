@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateHallDto } from './dto/create-hall.dto';
-import { UpdateHallDto } from './dto/update-hall.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Hall } from './entities/hall.entity';
 import { Repository } from 'typeorm';
 import { FilesService } from '@/files/files.service';
+import { Hall } from '../entities/hall.entity';
+import { CreateHallDto } from '../dto/create-hall.dto';
+import { UpdateHallDto } from '../dto/update-hall.dto';
 
 @Injectable()
 export class HallsService {

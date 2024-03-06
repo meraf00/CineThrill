@@ -12,18 +12,17 @@ import {
   FileTypeValidator,
   UploadedFile,
   HttpStatus,
-  HttpCode,
 } from '@nestjs/common';
-import { HallsService } from './halls.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ZodValidationPipe } from '@/shared/validator';
+import { BaseResponse } from '@/shared/base-response';
+import { HallsService } from '../services/halls.service';
 import {
   CreateHallDto,
   MAX_FILE_SIZE,
   createHallSchema,
-} from './dto/create-hall.dto';
-import { UpdateHallDto, updateHallSchema } from './dto/update-hall.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ZodValidationPipe } from '@/shared/validator';
-import { BaseResponse } from '@/shared/base-response';
+} from '../dto/create-hall.dto';
+import { UpdateHallDto, updateHallSchema } from '../dto/update-hall.dto';
 
 @Controller('halls')
 export class HallsController {
