@@ -1,13 +1,14 @@
 import { z } from 'zod';
 
-export const updateSeatSchema = z
-  .object({
-    label: z.string(),
-    x: z.number(),
-    y: z.number(),
-    width: z.number(),
-    height: z.number(),
-  })
-  .partial();
+const updateSeatSchema = z.object({
+  id: z.string(),
+  label: z.string().optional(),
+  x: z.number().optional(),
+  y: z.number().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+});
 
-export type UpdateSeatDto = z.infer<typeof updateSeatSchema>;
+export const updateSeatsSchema = z.array(updateSeatSchema).min(1);
+
+export type UpdateSeatsDto = z.infer<typeof updateSeatsSchema>;

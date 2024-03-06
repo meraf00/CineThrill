@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createSeatSchema = z
+const createSeatSchema = z
   .object({
     label: z.string(),
     x: z.number(),
@@ -10,4 +10,6 @@ export const createSeatSchema = z
   })
   .required();
 
-export type CreateSeatDto = z.infer<typeof createSeatSchema>;
+export const createSeatsSchema = z.array(createSeatSchema).min(1);
+
+export type CreateSeatsDto = z.infer<typeof createSeatsSchema>;
