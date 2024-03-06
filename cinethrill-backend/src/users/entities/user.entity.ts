@@ -1,9 +1,12 @@
+import { Booking } from '@/bookings/entities/booking.entity';
 import { Movie } from '@/movie/entities/movie.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -44,4 +47,10 @@ export class User {
   })
   @JoinTable()
   likedMovies: Movie[];
+
+  @OneToMany(() => Booking, (booking) => booking.user, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  bookings: Booking[];
 }

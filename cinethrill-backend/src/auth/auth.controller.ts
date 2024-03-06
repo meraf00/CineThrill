@@ -3,10 +3,10 @@ import { AuthResponse, AuthService } from './auth.service';
 import { SignUpDto, signUpSchema } from './dto/signup.dto';
 import { LoginDto, loginSchema } from './dto/login.dto';
 import { UsersService } from '@/users/users.service';
-import { BaseResponse } from '@/core/base-response';
+import { BaseResponse } from '@/shared/base-response';
 import { User } from '@/users/entities/user.entity';
 import { UserDto } from '@/users/dto/user.dto';
-import { ZodValidationPipe } from '@/core/validator';
+import { ZodValidationPipe } from '@/shared/validator';
 
 @Controller('auth')
 export class AuthController {

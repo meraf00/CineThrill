@@ -10,9 +10,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { CastService } from '../services/cast.service';
-import { ZodValidationPipe } from '@/core/validator';
+import { ZodValidationPipe } from '@/shared/validator';
 import { CreateCastDto, createCastSchema } from '../dto/create-cast.dto';
-import { BaseResponse } from '@/core/base-response';
+import { BaseResponse } from '@/shared/base-response';
 import { Cast } from '../entities/cast.entity';
 import { UpdateCastDto, updateCastSchema } from '../dto/update-cast.dto';
 

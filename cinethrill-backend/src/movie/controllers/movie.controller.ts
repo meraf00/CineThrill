@@ -14,8 +14,8 @@ import { MovieService } from '../services/movie.service';
 import { CreateMovieDto, createMovieSchema } from '../dto/create-movie.dto';
 import { UpdateMovieDto, updateMovieSchema } from '../dto/update-movie.dto';
 import { Movie } from '../entities/movie.entity';
-import { ZodValidationPipe } from '../../core/validator';
-import { BaseResponse } from '@/core/base-response';
+import { ZodValidationPipe } from '../../shared/validator';
+import { BaseResponse } from '@/shared/base-response';
 import { AuthGuard } from '@/auth/guards/auth.guard';
 
 @Controller('movies')

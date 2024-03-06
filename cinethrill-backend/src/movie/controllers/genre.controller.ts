@@ -10,9 +10,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { GenreService } from '../services/genre.service';
-import { ZodValidationPipe } from '@/core/validator';
+import { ZodValidationPipe } from '@/shared/validator';
 import { CreateGenreDto, createGenreSchema } from '../dto/create-genre.dto';
-import { BaseResponse } from '@/core/base-response';
+import { BaseResponse } from '@/shared/base-response';
 import { Genre } from '../entities/genre.entity';
 import { UpdateGenreDto, updateGenreSchema } from '../dto/update-genre.dto';
 

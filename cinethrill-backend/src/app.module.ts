@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { HallsModule } from './halls/halls.module';
 import configuration, { DatabaseConfig } from './config/configuration';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -44,6 +45,8 @@ import configuration, { DatabaseConfig } from './config/configuration';
     BookingsModule,
 
     HallsModule,
+
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
