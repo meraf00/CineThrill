@@ -46,8 +46,6 @@ export class SeatsService {
 
     const seats = await this.seatRepository.find({ where: { hall } });
 
-    console.log(seats);
-
     seats.forEach((seat) => {
       const updateSeat = updateSeatsDto.find((s) => s.id === seat.id);
       if (updateSeat) {
@@ -58,8 +56,6 @@ export class SeatsService {
         seat.label = updateSeat.label ?? seat.label;
       }
     });
-
-    console.log(seats);
 
     return this.seatRepository.save(seats);
   }

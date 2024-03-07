@@ -36,6 +36,10 @@ export class CastService {
   }
 
   async remove(id: string) {
-    return await this.castRepository.delete(id);
+    const cast = await this.find(id);
+
+    if (!cast) throw new NotFoundException('Cast not found');
+
+    return await this.castRepository.remove(cast);
   }
 }

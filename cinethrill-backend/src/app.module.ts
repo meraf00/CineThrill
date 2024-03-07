@@ -10,6 +10,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { HallsModule } from './halls/halls.module';
 import configuration, { DatabaseConfig } from './config/configuration';
 import { FilesModule } from './files/files.module';
+import { ShowtimesModule } from './showtimes/showtimes.module';
 
 @Module({
   imports: [
@@ -47,6 +48,8 @@ import { FilesModule } from './files/files.module';
     HallsModule,
 
     FilesModule,
+
+    ShowtimesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

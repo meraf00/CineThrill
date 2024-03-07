@@ -40,6 +40,6 @@ export class GenreService {
 
     if (!genre) throw new NotFoundException('Genre not found');
 
-    return await this.genreRepository.delete(id);
+    return await this.genreRepository.remove(genre);
   }
 }

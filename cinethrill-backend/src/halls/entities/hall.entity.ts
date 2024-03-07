@@ -2,10 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Seat } from './seat.entity';
+import { Showtime } from '@/showtimes/entities/showtime.entity';
 
 @Entity()
 export class Hall {
@@ -24,4 +27,8 @@ export class Hall {
   @OneToMany(() => Seat, (seat) => seat.hall, { onDelete: 'CASCADE' })
   @JoinColumn()
   seats: Seat[];
+
+  @ManyToMany(() => Showtime, (showtime) => showtime.halls)
+  @JoinTable()
+  showtimes: Showtime[];
 }

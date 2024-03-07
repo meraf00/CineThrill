@@ -9,10 +9,11 @@ import { FilesModule } from '@/files/files.module';
 import { SeatsController } from './controllers/seats.controller';
 import { SeatsService } from './services/seats.service';
 import { Seat } from './entities/seat.entity';
+import { Showtime } from '@/showtimes/entities/showtime.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Hall, Seat]),
+    TypeOrmModule.forFeature([Hall, Seat, Showtime]),
     MulterModule.register({
       storage: memoryStorage(),
     }),
@@ -20,6 +21,6 @@ import { Seat } from './entities/seat.entity';
   ],
   controllers: [HallsController, SeatsController],
   providers: [HallsService, SeatsService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, HallsService],
 })
 export class HallsModule {}

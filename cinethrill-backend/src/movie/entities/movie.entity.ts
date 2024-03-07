@@ -4,10 +4,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Genre } from './genre.entity';
 import { Cast } from './cast.entity';
 import { User } from '@/users/entities/user.entity';
+import { Showtime } from '@/showtimes/entities/showtime.entity';
 
 @Entity()
 export class Movie {
@@ -65,4 +67,7 @@ export class Movie {
     onDelete: 'CASCADE',
   })
   likedBy: User[];
+
+  @OneToMany(() => Showtime, (showtime) => showtime.movie)
+  showtimes: Showtime[];
 }

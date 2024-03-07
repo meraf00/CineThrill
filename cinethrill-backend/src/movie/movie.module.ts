@@ -12,16 +12,17 @@ import { CastController } from './controllers/cast.controller';
 import { AuthModule } from '@/auth/auth.module';
 import { UsersModule } from '@/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
+import { Showtime } from '@/showtimes/entities/showtime.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Movie, Cast, Genre]),
+    TypeOrmModule.forFeature([Movie, Cast, Genre, Showtime]),
     AuthModule,
     UsersModule,
     JwtModule,
   ],
   controllers: [MovieController, GenreController, CastController],
   providers: [MovieService, CastService, GenreService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, MovieService],
 })
 export class MovieModule {}
