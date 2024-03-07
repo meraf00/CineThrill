@@ -2,10 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Hall } from './hall.entity';
+import { Ticket } from '@/showtimes/entities/ticket.entity';
 
 @Entity()
 export class Seat {
@@ -32,4 +35,7 @@ export class Seat {
 
   @Column()
   height: number;
+
+  @OneToMany(() => Ticket, (ticket) => ticket.seat)
+  tickets: Ticket[];
 }

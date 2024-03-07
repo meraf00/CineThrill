@@ -4,10 +4,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Ticket } from './ticket.entity';
 
 @Entity()
 export class Showtime {
@@ -26,4 +29,8 @@ export class Showtime {
 
   @ManyToMany(() => Hall, (hall) => hall.showtimes)
   halls: Hall[];
+
+  @OneToMany(() => Ticket, (ticket) => ticket.showtime)
+  @JoinTable()
+  tickets: Ticket[];
 }

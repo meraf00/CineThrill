@@ -8,10 +8,12 @@ import { HallsModule } from '@/halls/halls.module';
 import { MovieModule } from '@/movie/movie.module';
 import { MovieShowtimesController } from './controllers/movie-showtimes.controller';
 import { HallShowtimesController } from './controllers/hall-showtimes.controller';
+import { Booking } from '@/bookings/entities/booking.entity';
+import { Ticket } from './entities/ticket.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Showtime, Movie]),
+    TypeOrmModule.forFeature([Showtime, Movie, Booking, Ticket]),
     HallsModule,
     MovieModule,
   ],

@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateBookingDto } from './create-booking.dto';
+import { z } from 'zod';
 
-export class UpdateBookingDto extends PartialType(CreateBookingDto) {}
+export const updateBookingSchema = z
+  .object({
+    tickets: z.array(z.string().uuid()),
+  })
+  .required();
+
+export type UpdateBookingDto = z.infer<typeof updateBookingSchema>;

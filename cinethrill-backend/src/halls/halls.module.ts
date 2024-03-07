@@ -10,10 +10,11 @@ import { SeatsController } from './controllers/seats.controller';
 import { SeatsService } from './services/seats.service';
 import { Seat } from './entities/seat.entity';
 import { Showtime } from '@/showtimes/entities/showtime.entity';
+import { Booking } from '@/bookings/entities/booking.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Hall, Seat, Showtime]),
+    TypeOrmModule.forFeature([Hall, Seat, Showtime, Booking]),
     MulterModule.register({
       storage: memoryStorage(),
     }),
