@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBookingDto } from '../dto/create-booking.dto';
 import { UpdateBookingDto } from '../dto/update-booking.dto';
+import { User } from '@/users/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Booking } from '../entities/booking.entity';
 
 @Injectable()
 export class BookingsService {
-  create(createBookingDto: CreateBookingDto) {
-    return 'This action adds a new booking';
+  constructor(
+    @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
+  ) {}
+
+  create(user: User, createBookingDto: CreateBookingDto) {
+    // const booking = this.bookingRepository.create(createBookingDto);
+    // booking.user = user;
+    // return this.bookingRepository.save(booking);
   }
 
   findAll() {

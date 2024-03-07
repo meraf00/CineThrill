@@ -17,7 +17,7 @@ export class BookingsController {
 
   @Post()
   create(@Body() createBookingDto: CreateBookingDto) {
-    return this.bookingsService.create(createBookingDto);
+    // return this.bookingsService.create(createBookingDto);
   }
 
   @Get()

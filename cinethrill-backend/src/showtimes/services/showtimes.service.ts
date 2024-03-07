@@ -6,7 +6,7 @@ import {
 import { CreateShowtimeDto } from '../dto/create-showtime.dto';
 import { UpdateShowtimeDto } from '../dto/update-showtime.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Showtime } from '../entities/showtime.entity';
 import { MovieService } from '@/movie/services/movie.service';
 import { HallsService } from '@/halls/services/halls.service';

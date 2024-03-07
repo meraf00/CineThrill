@@ -39,6 +39,12 @@ export class SeatsService {
     return this.seatRepository.findOne({ where: { id, hall } });
   }
 
+  async findOneById(id: string) {
+    const seat = this.seatRepository.findOne({ where: { id } });
+    if (!seat) throw new NotFoundException('Seat not found');
+    return seat;
+  }
+
   async update(hallId: string, updateSeatsDto: UpdateSeatsDto) {
     const hall = await this.hallService.findOne(hallId);
 
