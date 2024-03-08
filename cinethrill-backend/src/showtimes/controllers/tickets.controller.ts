@@ -13,36 +13,53 @@ import { ZodValidationPipe } from '@/shared/validator';
 import { CreateTicketDto, createTicketSchema } from '../dto/create-ticket.dto';
 import { UpdateTicketDto, updateTicketSchema } from '../dto/update-ticket.dto';
 import { BaseResponse } from '@/shared/base-response';
+import { Ticket } from '../entities/ticket.entity';
 
 @Controller('tickets')
 export class TicketsController {
   constructor(private readonly ticketService: TicketService) {}
 
   @Post()
-  create(
+  async create(
     @Body(new ZodValidationPipe(createTicketSchema))
     createTicketDto: CreateTicketDto,
   ) {
-    return this.ticketService.create(createTicketDto);
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.create(createTicketDto);
+
+    return response;
   }
 
   @Get()
-  findAll() {
-    return this.ticketService.findAll();
+  async findAll() {
+    const response = new BaseResponse<Ticket[]>();
+
+    response.data = await this.ticketService.findAll();
+
+    return response;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ticketService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.findOne(id);
+
+    return response;
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateTicketSchema))
     updateTicketDto: UpdateTicketDto,
   ) {
-    return this.ticketService.update(id, updateTicketDto);
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.update(id, updateTicketDto);
+
+    return response;
   }
 
   @Delete(':id')

@@ -23,6 +23,7 @@ import {
   createHallSchema,
 } from '../dto/create-hall.dto';
 import { UpdateHallDto, updateHallSchema } from '../dto/update-hall.dto';
+import { Hall } from '../entities/hall.entity';
 
 @Controller('halls')
 export class HallsController {
@@ -30,7 +31,7 @@ export class HallsController {
 
   @Post()
   @UseInterceptors(FileInterceptor('seatMapImage'))
-  create(
+  async create(
     @Body(new ZodValidationPipe(createHallSchema)) createHallDto: CreateHallDto,
     @UploadedFile(
       new ParseFilePipe({
@@ -42,22 +43,34 @@ export class HallsController {
     )
     file: Express.Multer.File,
   ) {
-    return this.hallsService.create(createHallDto, file);
+    const response = new BaseResponse<Hall>();
+
+    response.data = await this.hallsService.create(createHallDto, file);
+
+    return response;
   }
 
   @Get()
-  findAll() {
-    return this.hallsService.findAll();
+  async findAll() {
+    const response = new BaseResponse<Hall[]>();
+
+    response.data = await this.hallsService.findAll();
+
+    return response;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.hallsService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const response = new BaseResponse<Hall>();
+
+    response.data = await this.hallsService.findOne(id);
+
+    return response;
   }
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('seatMapImage'))
-  update(
+  async update(
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateHallSchema)) updateHallDto: UpdateHallDto,
     @UploadedFile(
@@ -70,7 +83,11 @@ export class HallsController {
     )
     file: Express.Multer.File,
   ) {
-    return this.hallsService.update(id, updateHallDto, file);
+    const response = new BaseResponse<Hall>();
+
+    response.data = await this.hallsService.update(id, updateHallDto, file);
+
+    return response;
   }
 
   @Delete(':id')

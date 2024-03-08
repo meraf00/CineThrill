@@ -11,6 +11,8 @@ import { BookingsService } from '../services/bookings.service';
 import { CreateBookingDto } from '../dto/create-booking.dto';
 import { AuthGuard } from '@/auth/guards/auth.guard';
 import { Request } from 'express';
+import { Booking } from '../entities/booking.entity';
+import { BaseResponse } from '@/shared/base-response';
 
 @UseGuards(AuthGuard)
 @Controller('bookings')
@@ -18,22 +20,44 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Post()
-  create(@Req() request: Request, @Body() createBookingDto: CreateBookingDto) {
-    return this.bookingsService.create(request.user, createBookingDto);
+  async create(
+    @Req() request: Request,
+    @Body() createBookingDto: CreateBookingDto,
+  ) {
+    const response = new BaseResponse<Booking>();
+
+    response.data = await this.bookingsService.create(
+      request.user,
+      createBookingDto,
+    );
+
+    return response;
   }
 
   @Get('me')
-  findMyBookings(@Req() request: Request) {
-    return this.bookingsService.findAllForUser(request.user);
+  async findMyBookings(@Req() request: Request) {
+    const response = new BaseResponse<Booking[]>();
+
+    response.data = await this.bookingsService.findAllForUser(request.user);
+
+    return response;
   }
 
   @Get()
-  findAll(@Req() request: Request) {
-    return this.bookingsService.findAll();
+  async findAll(@Req() request: Request) {
+    const response = new BaseResponse<Booking[]>();
+
+    response.data = await this.bookingsService.findAll();
+
+    return response;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookingsService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const response = new BaseResponse<Booking>();
+
+    response.data = await this.bookingsService.findOne(id);
+
+    return response;
   }
 }

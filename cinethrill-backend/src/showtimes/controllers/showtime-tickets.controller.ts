@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  HttpStatus,
 } from '@nestjs/common';
 import { TicketService } from '../services/ticket.service';
 import { ZodValidationPipe } from '@/shared/validator';
@@ -17,42 +18,71 @@ import {
   UpdateShowtimeTicketDto,
   updateShowtimeTicketSchema,
 } from '../dto/update-showtime-ticket.dto';
+import { BaseResponse } from '@/shared/base-response';
+import { Ticket } from '../entities/ticket.entity';
 
 @Controller('showtimes/:showtimeId/tickets')
 export class TicketsController {
   constructor(private readonly ticketService: TicketService) {}
 
   @Post()
-  create(
+  async create(
     @Param('showtimeId') showtime: string,
     @Body(new ZodValidationPipe(createShowtimeTicketSchema))
     createShowtimeTicketDto: CreateShowtimeTicketDto,
   ) {
-    return this.ticketService.create({ ...createShowtimeTicketDto, showtime });
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.create({
+      ...createShowtimeTicketDto,
+      showtime,
+    });
+
+    return response;
   }
 
   @Get()
-  findAll(@Param('showtimeId') showtime: string) {
-    return this.ticketService.findAllForShowtime(showtime);
+  async findAll(@Param('showtimeId') showtime: string) {
+    const response = new BaseResponse<Ticket[]>();
+
+    response.data = await this.ticketService.findAllForShowtime(showtime);
+
+    return response;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ticketService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.findOne(id);
+
+    return response;
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Param('showtimeId') showtime: string,
     @Body(new ZodValidationPipe(updateShowtimeTicketSchema))
     updateTicketDto: UpdateShowtimeTicketDto,
   ) {
-    return this.ticketService.update(id, { ...updateTicketDto, showtime });
+    const response = new BaseResponse<Ticket>();
+
+    response.data = await this.ticketService.update(id, {
+      ...updateTicketDto,
+      showtime,
+    });
+
+    return response;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ticketService.remove(id);
+  async remove(@Param('id') id: string) {
+    await this.ticketService.remove(id);
+
+    const response = new BaseResponse();
+    response.statusCode = HttpStatus.NO_CONTENT;
+
+    return response;
   }
 }

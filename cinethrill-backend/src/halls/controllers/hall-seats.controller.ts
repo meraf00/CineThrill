@@ -15,6 +15,7 @@ import { BaseResponse } from '@/shared/base-response';
 import { SeatsService } from '../services/seats.service';
 import { CreateSeatsDto, createSeatsSchema } from '../dto/create-seat.dto';
 import { UpdateSeatsDto, updateSeatsSchema } from '../dto/update-seat.dto';
+import { Seat } from '../entities/seat.entity';
 
 @Controller('halls/:hallId/seats')
 export class HallSeatsController {
@@ -22,31 +23,47 @@ export class HallSeatsController {
 
   @Post()
   @UseInterceptors(FileInterceptor('seatMapImage'))
-  create(
+  async create(
     @Param('hallId') hallId: string,
     @Body(new ZodValidationPipe(createSeatsSchema))
     createSeatsDto: CreateSeatsDto,
   ) {
-    return this.seatsService.create(hallId, createSeatsDto);
+    const response = new BaseResponse<Seat[]>();
+
+    response.data = await this.seatsService.create(hallId, createSeatsDto);
+
+    return response;
   }
 
   @Get()
-  findAll(@Param('hallId') hallId: string) {
-    return this.seatsService.findAll(hallId);
+  async findAll(@Param('hallId') hallId: string) {
+    const response = new BaseResponse<Seat[]>();
+
+    response.data = await this.seatsService.findAll(hallId);
+
+    return response;
   }
 
   @Get(':id')
-  findOne(@Param('hallId') hallId: string, @Param('id') id: string) {
-    return this.seatsService.findOne(hallId, id);
+  async findOne(@Param('hallId') hallId: string, @Param('id') id: string) {
+    const response = new BaseResponse<Seat>();
+
+    response.data = await this.seatsService.findOne(hallId, id);
+
+    return response;
   }
 
   @Patch()
-  update(
+  async update(
     @Param('hallId') hallId: string,
     @Body(new ZodValidationPipe(updateSeatsSchema))
     updateSeatsDto: UpdateSeatsDto,
   ) {
-    return this.seatsService.update(hallId, updateSeatsDto);
+    const response = new BaseResponse<Seat[]>();
+
+    response.data = await this.seatsService.update(hallId, updateSeatsDto);
+
+    return response;
   }
 
   @Delete(':id')
