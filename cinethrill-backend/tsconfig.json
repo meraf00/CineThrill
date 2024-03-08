@@ -3,6 +3,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "typeRoots": ["./src/shared/types"],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
