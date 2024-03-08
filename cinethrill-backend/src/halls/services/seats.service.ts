@@ -36,11 +36,16 @@ export class SeatsService {
 
     if (!hall) throw new NotFoundException('Hall not found');
 
-    return this.seatRepository.findOne({ where: { id, hall } });
+    return this.seatRepository.findOne({
+      where: { id, hall },
+    });
   }
 
   async findOneById(id: string) {
-    const seat = this.seatRepository.findOne({ where: { id } });
+    const seat = await this.seatRepository.findOne({
+      where: { id },
+      relations: ['hall'],
+    });
     if (!seat) throw new NotFoundException('Seat not found');
     return seat;
   }

@@ -37,8 +37,21 @@ export class TicketService {
     return this.ticketRepository.find();
   }
 
-  findOne(id: string) {
-    return this.ticketRepository.findOne({ where: { id } });
+  async findAllForShowtime(showtimeId: string) {
+    const showtime = await this.showtimeService.findOne(showtimeId);
+
+    return this.ticketRepository.find({ where: { showtime } });
+  }
+
+  async findOne(id: string) {
+    const ticket = await this.ticketRepository.findOne({
+      where: { id },
+      relations: ['showtime', 'seat'],
+    });
+
+    if (!ticket) throw new NotFoundException('Ticket not found');
+
+    return ticket;
   }
 
   async update(id: string, updateTicketDto: UpdateTicketDto) {
@@ -53,6 +66,16 @@ export class TicketService {
     if (updateTicketDto.seat) {
       ticket.seat = await this.seatService.findOneById(updateTicketDto.seat);
     }
+
+    ticket.price = updateTicketDto.price ?? ticket.price;
+    ticket.cancellable = updateTicketDto.cancellable ?? ticket.cancellable;
+    ticket.cancellationDate =
+      updateTicketDto.cancellationDate ?? ticket.cancellationDate;
+    ticket.cancellationFee =
+      updateTicketDto.cancellationFee ?? ticket.cancellationFee;
+    ticket.reservationLifeInSeconds =
+      updateTicketDto.reservationLifeInSeconds ??
+      ticket.reservationLifeInSeconds;
 
     return this.ticketRepository.save(ticket);
   }

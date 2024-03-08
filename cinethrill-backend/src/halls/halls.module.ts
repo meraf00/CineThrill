@@ -11,6 +11,7 @@ import { SeatsService } from './services/seats.service';
 import { Seat } from './entities/seat.entity';
 import { Showtime } from '@/showtimes/entities/showtime.entity';
 import { Booking } from '@/bookings/entities/booking.entity';
+import { HallSeatsController } from './controllers/hall-seats.controller';
 
 @Module({
   imports: [
@@ -20,8 +21,8 @@ import { Booking } from '@/bookings/entities/booking.entity';
     }),
     FilesModule,
   ],
-  controllers: [HallsController, SeatsController],
+  controllers: [HallsController, SeatsController, HallSeatsController],
   providers: [HallsService, SeatsService],
-  exports: [TypeOrmModule, HallsService],
+  exports: [TypeOrmModule, HallsService, SeatsService],
 })
 export class HallsModule {}

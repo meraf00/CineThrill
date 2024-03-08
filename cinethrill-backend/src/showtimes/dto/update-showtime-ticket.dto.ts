@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const updateTicketSchema = z
+export const updateShowtimeTicketSchema = z
   .object({
     price: z.number().min(0),
     cancellable: z.boolean(),
@@ -9,9 +9,10 @@ export const updateTicketSchema = z
       message: 'Cancellation time must be in the future',
     }),
     reservationLifeInSeconds: z.number().min(0),
-    showtime: z.string().uuid(),
     seat: z.string().uuid(),
   })
   .partial();
 
-export type UpdateTicketDto = z.infer<typeof updateTicketSchema>;
+export type UpdateShowtimeTicketDto = z.infer<
+  typeof updateShowtimeTicketSchema
+>;

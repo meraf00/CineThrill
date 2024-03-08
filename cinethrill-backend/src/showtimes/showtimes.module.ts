@@ -10,6 +10,8 @@ import { MovieShowtimesController } from './controllers/movie-showtimes.controll
 import { HallShowtimesController } from './controllers/hall-showtimes.controller';
 import { Booking } from '@/bookings/entities/booking.entity';
 import { Ticket } from './entities/ticket.entity';
+import { TicketService } from './services/ticket.service';
+import { TicketsController } from './controllers/tickets.controller';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { Ticket } from './entities/ticket.entity';
     ShowtimesController,
     MovieShowtimesController,
     HallShowtimesController,
+    TicketsController,
   ],
-  providers: [ShowtimesService],
+  providers: [ShowtimesService, TicketService],
+  exports: [ShowtimesService, TicketService, HallsModule],
 })
 export class ShowtimesModule {}
