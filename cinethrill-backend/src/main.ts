@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.enableCors();
   app.setGlobalPrefix('api/v1.0');
 
@@ -14,10 +15,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, docsConfig);
+  SwaggerModule.setup('api/v1.0/documentation', app, document);
 
   const configService = app.get(ConfigService);
-
-  SwaggerModule.setup('api/v1.0/documentation', app, document);
 
   await app.listen(configService.get<string>('port'));
 }

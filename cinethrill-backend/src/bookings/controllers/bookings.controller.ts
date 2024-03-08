@@ -3,40 +3,37 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { BookingsService } from '../services/bookings.service';
 import { CreateBookingDto } from '../dto/create-booking.dto';
-import { UpdateBookingDto } from '../dto/update-booking.dto';
+import { AuthGuard } from '@/auth/guards/auth.guard';
+import { Request } from 'express';
 
+@UseGuards(AuthGuard)
 @Controller('bookings')
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Post()
-  create(@Body() createBookingDto: CreateBookingDto) {
-    // return this.bookingsService.create(createBookingDto);
+  create(@Req() request: Request, @Body() createBookingDto: CreateBookingDto) {
+    return this.bookingsService.create(request.user, createBookingDto);
+  }
+
+  @Get('me')
+  findMyBookings(@Req() request: Request) {
+    return this.bookingsService.findAllForUser(request.user);
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() request: Request) {
     return this.bookingsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.bookingsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingsService.update(+id, updateBookingDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookingsService.remove(+id);
+    return this.bookingsService.findOne(id);
   }
 }
