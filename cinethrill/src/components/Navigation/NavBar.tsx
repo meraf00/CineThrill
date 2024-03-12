@@ -2,14 +2,18 @@
 
 import Image from 'next/image';
 import { NavLink } from './NavLink';
-import { IconParkOutlineSearch } from '../Icons';
+import { GgProfile, IconParkOutlineSearch } from '../Icons';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { DropDown } from './DropDown';
 
 type Section = 'popular' | 'top-rated' | 'new-release' | 'upcoming' | null;
 
 export const NavBar = () => {
   const [activeSection, setActiveSection] = useState<Section>(null);
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+
+  const isLoggedIn = true;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,13 +34,15 @@ export const NavBar = () => {
       const upcoming = upcomingSection.getBoundingClientRect();
       const bodyHeight = body.getBoundingClientRect().height;
 
-      if (popular.y > 0 && popular.y < bodyHeight) {
+      console.log(popular.y);
+
+      if (popular.y >= -1 && popular.y < bodyHeight) {
         setActiveSection('popular');
-      } else if (topRated.y > 0 && topRated.y < bodyHeight) {
+      } else if (topRated.y >= -1 && topRated.y < bodyHeight) {
         setActiveSection('top-rated');
-      } else if (newRelease.y > 0 && newRelease.y < bodyHeight) {
+      } else if (newRelease.y >= -1 && newRelease.y < bodyHeight) {
         setActiveSection('new-release');
-      } else if (upcoming.y > 0 && upcoming.y < bodyHeight) {
+      } else if (upcoming.y >= -1 && upcoming.y < bodyHeight) {
         setActiveSection('upcoming');
       } else {
         setActiveSection(null);
@@ -53,54 +59,69 @@ export const NavBar = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 flex justify-between px-16 borde border-gray-600 border-opacity-20 border-1 text-sm z-50 backdrop-blur-sm">
-      <Link href="/">
-        <div className="flex item-center py-3 gap-2 font-medium text-teal text tracking-wide">
-          <div className="w-fit h-fit my-auto">
-            <Image
-              src="/logo.png"
-              width={22}
-              height={20.9}
-              alt="Picture of the author"
-            />
+    <>
+      <DropDown show={showDropDown} />
+      <nav className="sticky top-0 flex justify-between px-16 border-gray-600 border-opacity-20 text-sm z-50 backdrop-blur-sm">
+        <Link href="/">
+          <div className="flex item-center py-3 gap-2 font-medium text-teal text tracking-wide">
+            <div className="w-fit h-fit my-auto">
+              <Image
+                src="/logo.png"
+                width={22}
+                height={20.9}
+                alt="Picture of the author"
+              />
+            </div>
+            <div>
+              <span className="text-2xl">C</span>ineThrill
+            </div>
           </div>
-          <div>
-            <span className="text-2xl">C</span>ineThrill
-          </div>
+        </Link>
+
+        <div className="flex gap-5 items-center">
+          <ul className="flex gap-10 font-light h-full">
+            <NavLink href="/#popular" isActive={activeSection === 'popular'}>
+              Popular
+            </NavLink>
+            <NavLink
+              href="/#top-rated"
+              isActive={activeSection === 'top-rated'}
+            >
+              Top Rated
+            </NavLink>
+            <NavLink
+              href="/#new-release"
+              isActive={activeSection === 'new-release'}
+            >
+              New Release
+            </NavLink>
+            <NavLink href="/#upcoming" isActive={activeSection === 'upcoming'}>
+              Upcoming
+            </NavLink>
+          </ul>
+
+          <div className="w-[1px] h-[1rem] bg-foreground-dark"></div>
+
+          <button className="bg-teal-light hover:bg-opacity-50 bg-opacity-20 w-8 h-8 rounded-full">
+            <IconParkOutlineSearch className="m-auto w-[1.1rem] h-[1.1rem]" />
+          </button>
         </div>
-      </Link>
 
-      <div className="flex gap-5 items-center">
-        <ul className="flex gap-10 font-light h-full">
-          <NavLink href="/#popular" isActive={activeSection === 'popular'}>
-            Popular
-          </NavLink>
-          <NavLink href="/#top-rated" isActive={activeSection === 'top-rated'}>
-            Top Rated
-          </NavLink>
-          <NavLink
-            href="/#new-release"
-            isActive={activeSection === 'new-release'}
+        {isLoggedIn ? (
+          <button
+            className="flex item-center my-auto bg-teal-light hover:bg-opacity-50 bg-opacity-20 w-8 h-8 rounded-full"
+            onClick={() => setShowDropDown((show) => !show)}
           >
-            New Release
-          </NavLink>
-          <NavLink href="/#upcoming" isActive={activeSection === 'upcoming'}>
-            Upcoming
-          </NavLink>
-        </ul>
-
-        <div className="w-[1px] h-[1rem] bg-foreground-dark"></div>
-
-        <button className="bg-teal-light hover:bg-opacity-50 bg-opacity-20 w-8 h-8 rounded-[9999px]">
-          <IconParkOutlineSearch className="m-auto w-[1.1rem] h-[1.1rem]" />
-        </button>
-      </div>
-
-      <div className="flex items-center gap-3 font-light">
-        <Link href="/login">Login</Link>
-        <div className="w-[1px] h-[1rem] bg-foreground-dark"></div>
-        <Link href="/signup">Sign Up</Link>
-      </div>
-    </nav>
+            <GgProfile className="m-auto w-[1.5rem] h-[1.5rem]" />
+          </button>
+        ) : (
+          <div className="flex items-center gap-3 font-light">
+            <Link href="/login">Login</Link>
+            <div className="w-[1px] h-[1rem] bg-foreground-dark"></div>
+            <Link href="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+    </>
   );
 };
