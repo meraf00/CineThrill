@@ -1,14 +1,22 @@
+'use client';
+
 import {
+  IonTicketOutline,
   MaterialSymbolsLightFavorite,
   MaterialSymbolsLightStar,
   MaterialSymbolsLightStarOutline,
   RiPlayFill,
 } from '@/components/Icons';
+import { FancyButton } from '@/components/client/Button/FancyButton';
 import { SimilarMoviesList } from '@/components/client/movie-detail/SimilarMoviesList';
 import { protestRevolution } from '@/libs/fonts';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function MovieDetail() {
+  const pathname = usePathname();
+
   return (
     <main className="w-full h-[90vh] overflow-y-auto pt-14 px-40">
       <Image
@@ -53,10 +61,11 @@ export default function MovieDetail() {
 
       {/* Play, buy or add to favorite */}
       <div className="flex my-4">
-        <button className="bg-teal-dark hover:bg-teal px-3 py-2 flex item-center justify-center text-2xl">
-          <RiPlayFill />
-        </button>
-        <button className="bg-teal hover:bg-teal-light px-3 py-2 flex item-center justify-center text-2xl ">
+        <FancyButton href={pathname + '/tickets'}>
+          <IonTicketOutline />
+          <span className="text-sm font-bold">Buy Ticket</span>
+        </FancyButton>
+        <button className="bg-teal-dark hover:text-teal hover:bg-opacity-30 px-3 py-2 flex item-center justify-center text-2xl transition-color duration-300 ease-in-out">
           <MaterialSymbolsLightFavorite />
         </button>
       </div>

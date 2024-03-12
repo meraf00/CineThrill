@@ -34,8 +34,6 @@ export const NavBar = () => {
       const upcoming = upcomingSection.getBoundingClientRect();
       const bodyHeight = body.getBoundingClientRect().height;
 
-      console.log(popular.y);
-
       if (popular.y >= -1 && popular.y < bodyHeight) {
         setActiveSection('popular');
       } else if (topRated.y >= -1 && topRated.y < bodyHeight) {

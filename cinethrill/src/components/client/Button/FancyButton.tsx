@@ -1,8 +1,15 @@
+import Link from 'next/link';
 import React from 'react';
 
-export const FancyButton = ({ children }: { children: React.ReactNode }) => {
+export interface FancyButtonProps {
+  children: React.ReactNode;
+  href: string;
+}
+
+export const FancyButton = ({ children, href }: FancyButtonProps) => {
   return (
-    <button
+    <Link
+      href={href}
       className="relative group bg-teal hover:bg-opacity-20 text-blueblack-light 
           hover:text-foreground px-3 py-2 flex items-center justify-center gap-2
           transition-all duration-300 ease-in-out
@@ -33,6 +40,6 @@ export const FancyButton = ({ children }: { children: React.ReactNode }) => {
           "
       ></div>
       {children}
-    </button>
+    </Link>
   );
 };
