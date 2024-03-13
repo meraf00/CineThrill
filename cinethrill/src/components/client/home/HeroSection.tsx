@@ -69,7 +69,7 @@ export const HeroSection = () => {
           {movies[movieIdx].title}
         </h1>
 
-        <FancyButton>
+        <FancyButton href="">
           <span className="text-2xl flex justify-center items-center">
             <RiPlayFill />
           </span>

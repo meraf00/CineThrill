@@ -28,6 +28,14 @@ export const NavBar = () => {
         'upcoming'
       ) as HTMLElement;
 
+      if (
+        !popularSection ||
+        !topRatedSection ||
+        !newReleaseSection ||
+        !upcomingSection
+      )
+        return;
+
       const popular = popularSection.getBoundingClientRect();
       const topRated = topRatedSection.getBoundingClientRect();
       const newRelease = newReleaseSection.getBoundingClientRect();
