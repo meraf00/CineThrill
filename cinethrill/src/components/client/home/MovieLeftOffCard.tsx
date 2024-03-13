@@ -2,11 +2,11 @@ import { Movie } from '@/api/models/movie';
 import Image from 'next/image';
 import React from 'react';
 
-export interface MovieLeftOffCardProps {
+export interface MovieCardProps {
   movie: Movie;
 }
 
-export const MovieLeftOffCard = ({ movie }: MovieLeftOffCardProps) => {
+export const MovieCard = ({ movie }: MovieCardProps) => {
   let progress = null;
 
   if (movie.progress) {
@@ -40,7 +40,7 @@ export const MovieLeftOffCard = ({ movie }: MovieLeftOffCardProps) => {
         </div>
         <div className="flex gap-3">
           <button className="uppercase hover:text-teal text-sm font-semibold">
-            Play Now
+            Play Trailer
           </button>
           <div className="w-[1px] h-full bg-gray-600"></div>
           <button className="uppercase hover:text-teal text-sm font-semibold">

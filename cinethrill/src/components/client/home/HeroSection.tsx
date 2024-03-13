@@ -3,7 +3,7 @@
 import { GrommetIconsFormPrevious, RiPlayFill } from '@/components/Icons';
 import { FancyButton } from '@/components/client/Button/FancyButton';
 import { Backdrop } from '@/components/client/home/Backdrop';
-import { MovieLeftOffCard } from '@/components/client/home/MovieLeftOffCard';
+import { MovieCard } from '@/components/client/home/MovieLeftOffCard';
 
 import { protestRevolution } from '@/libs/fonts';
 import { useState } from 'react';
@@ -79,14 +79,16 @@ export const HeroSection = () => {
         </FancyButton>
       </div>
 
-      {/* Left off */}
+      {/* Recommended */}
       <div className="flex flex-col gap-8 items-center">
-        <h2 className="uppercase text-xs font-semibold">You left them off</h2>
+        <h2 className="uppercase text-xs font-semibold">
+          Recommendations for you
+        </h2>
 
-        {/* List of left off */}
+        {/* List of Recommended */}
         <div className="flex max-w-[46rem] gap-8 overflow-auto no-scrollbar">
-          {/* Left off card */}
-          <MovieLeftOffCard
+          {/* Recommended card */}
+          <MovieCard
             movie={{
               poster: '/the_witcher_poster_1.jpg',
               title: 'The Witcher',
@@ -97,7 +99,7 @@ export const HeroSection = () => {
                 "In the tumultuous land of Temeria, where monsters and political intrigue abound, Geralt of Rivia, the renowned Witcher, finds himself entangled in a web of dark magic and forgotten history. The story unfolds when Geralt receives a mysterious letter from an old friend, Triss Merigold, a powerful sorceress. Triss reveals that a powerful artifact, known as the 'Eclipse Crystal,' has resurfaced, and its dark magic threatens to plunge the entire continent into chaos.",
             }}
           />
-          <MovieLeftOffCard
+          <MovieCard
             movie={{
               poster: '/the_witcher_poster_1.jpg',
               title: 'The Witcher',
