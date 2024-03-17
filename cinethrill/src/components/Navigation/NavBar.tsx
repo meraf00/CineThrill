@@ -75,7 +75,7 @@ export const NavBar = () => {
                 src="/logo.png"
                 width={22}
                 height={20.9}
-                alt="Picture of the author"
+                alt="Logo Picture"
               />
             </div>
             <div>

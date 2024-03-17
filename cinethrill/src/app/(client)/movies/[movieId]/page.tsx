@@ -7,7 +7,7 @@ import {
   MaterialSymbolsLightStarOutline,
   RiPlayFill,
 } from '@/components/Icons';
-import { FancyButton } from '@/components/client/Button/FancyButton';
+import { FancyButton } from '@/components/Button/FancyButton';
 import { SimilarMoviesList } from '@/components/client/movie-detail/SimilarMoviesList';
 import { protestRevolution } from '@/libs/fonts';
 import Image from 'next/image';

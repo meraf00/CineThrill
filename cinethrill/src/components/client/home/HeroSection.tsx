@@ -1,7 +1,7 @@
 'use client';
 
 import { GrommetIconsFormPrevious, RiPlayFill } from '@/components/Icons';
-import { FancyButton } from '@/components/client/Button/FancyButton';
+import { FancyButton } from '@/components/Button/FancyButton';
 import { Backdrop } from '@/components/client/home/Backdrop';
 import { MovieCard } from '@/components/client/home/MovieLeftOffCard';
 

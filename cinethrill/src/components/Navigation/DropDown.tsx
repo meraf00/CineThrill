@@ -27,7 +27,7 @@ export const DropDown = ({ show }: DropDownProps) => {
         href=""
         className="text-red-500 hover:text-red-400 transition-colors duration-300"
       >
-        Sign Out
+        Logout
       </Link>
     </div>
   );

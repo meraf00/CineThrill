@@ -1,6 +1,6 @@
 'use client';
 import { IonTicketOutline, Screen, SolarSofaBroken } from '@/components/Icons';
-import { FancyButton } from '@/components/client/Button/FancyButton';
+import { FancyButton } from '@/components/Button/FancyButton';
 import { ScrollSelector } from '@/components/client/Selectors/ScrollSelector';
 import { SeatSelector } from '@/components/client/tickets/SeatSelector';
 import React, { useState } from 'react';

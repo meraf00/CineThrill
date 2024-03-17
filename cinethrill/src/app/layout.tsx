@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-y-auto h-screen">
       <body
         id="body"
-        className={`relative text-foreground ${poppins.className} font-normal bg-gradient-to-b from-blueblack to-blueblack-light w-full overflow-x-hidden bg-fixed overflow-y-scroll h-full`}
+        className={`relative text-foreground ${poppins.className} font-normal bg-gradient-to-b from-blueblack to-blueblack-light w-full overflow-x-hidden bg-fixed overflow-y-auto h-full`}
       >
         {children}
       </body>
