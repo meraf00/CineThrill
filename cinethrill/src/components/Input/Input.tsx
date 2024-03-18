@@ -8,7 +8,7 @@ export const Input = (
     HTMLInputElement
   >
 ) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.defaultValue ?? '');
 
   let className = '';
 
@@ -21,10 +21,13 @@ export const Input = (
     className = 'top-[50%] -translate-y-[50%]';
   }
 
+  console.log(value);
+
   return (
     <div className="relative">
       <input
         {...props}
+        defaultValue={undefined}
         className={
           'w-full peer p-2 bg-transparent border rounded-md border-opacity-25 border-white outline-none text-sm placeholder:text-transparent dark:[color-scheme:dark] ' +
           props.className

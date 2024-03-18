@@ -6,4 +6,13 @@ export interface Movie {
   description: string;
   poster: string;
   progress?: number;
+
+  genres?: string[];
+  directors?: string[];
+  actors?: string[];
+  plot?: string;
+
+  runtime?: string;
+  production?: string;
+  released?: Date;
 }
