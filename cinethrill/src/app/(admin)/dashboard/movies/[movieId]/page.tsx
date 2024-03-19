@@ -1,10 +1,15 @@
 'use client';
 
-import MovieForm from '@/components/Forms/MovieForm';
+import MovieForm, { MovieFormProps } from '@/components/Forms/MovieForm';
 import { useParams } from 'next/navigation';
 
 export default function EditMovie() {
   const { movieId } = useParams();
+
+  let form: MovieFormProps = {};
+
+  if (movieId !== 'new') {
+  }
 
   return (
     <main className="w-full">
@@ -12,7 +17,7 @@ export default function EditMovie() {
         <h1 className="font-bold text-xl">CineThrill Movies</h1>
       </div>
 
-      <MovieForm />
+      <MovieForm {...form} />
     </main>
   );
 }

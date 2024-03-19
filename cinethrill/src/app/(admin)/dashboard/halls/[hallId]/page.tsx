@@ -1,14 +1,12 @@
 'use client';
 
-import ShowtimeForm, {
-  ShowtimeFormProps,
-} from '@/components/Forms/ShowtimeForm';
+import HallForm, { HallFormProps } from '@/components/Forms/HallForm';
 import { useParams } from 'next/navigation';
 
 export default function EditShowtime() {
   const { showtimeId } = useParams();
 
-  let form: ShowtimeFormProps = {};
+  let form: HallFormProps = {};
 
   if (showtimeId !== 'new') {
   }
@@ -16,10 +14,10 @@ export default function EditShowtime() {
   return (
     <main className="w-full">
       <div className="flex  justify-between">
-        <h1 className="font-bold text-xl">CineThrill Showtimes</h1>
+        <h1 className="font-bold text-xl">CineThrill Halls</h1>
       </div>
 
-      <ShowtimeForm {...form} />
+      <HallForm {...form} />
     </main>
   );
 }

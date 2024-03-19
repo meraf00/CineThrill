@@ -22,12 +22,13 @@ export const Input = (
   }
 
   return (
-    <div className="relative grow">
+    <div className="relative">
       <input
         {...props}
+        placeholder=""
         defaultValue={undefined}
         className={
-          'w-full peer p-2 bg-transparent border rounded-md border-opacity-25 border-white outline-none text-sm placeholder:text-transparent dark:[color-scheme:dark] ' +
+          'w-full peer p-2 bg-transparent border rounded-md border-opacity-25 border-white outline-none text-sm  dark:[color-scheme:dark] ' +
           props.className
         }
         value={value}

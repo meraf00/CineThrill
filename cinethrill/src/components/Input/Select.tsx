@@ -11,7 +11,7 @@ export const Select = (
       <select
         {...props}
         className={
-          'w-full peer p-2 bg-transparent border rounded-md border-opacity-25 border-white outline-none text-xs placeholder:text-transparent dark:[color-scheme:dark]  ' +
+          'w-full peer p-2 bg-transparent border rounded-md border-opacity-25 border-white outline-none text-xs dark:[color-scheme:dark]  ' +
           props.className
         }
       >
