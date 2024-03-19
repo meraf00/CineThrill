@@ -1,6 +1,11 @@
-import MovieForm from '@/components/Forms/MovieForm';
+'use client';
 
-export default function AddMovie() {
+import MovieForm from '@/components/Forms/MovieForm';
+import { useParams } from 'next/navigation';
+
+export default function EditMovie() {
+  const { movieId } = useParams();
+
   return (
     <main className="w-full">
       <div className="flex  justify-between">

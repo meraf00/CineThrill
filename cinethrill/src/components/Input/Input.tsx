@@ -21,10 +21,8 @@ export const Input = (
     className = 'top-[50%] -translate-y-[50%]';
   }
 
-  console.log(value);
-
   return (
-    <div className="relative">
+    <div className="relative grow">
       <input
         {...props}
         defaultValue={undefined}

@@ -5,7 +5,7 @@ import {
   TablerPlus,
 } from '@/components/Icons';
 import { Input } from '@/components/Input/Input';
-import { MovieTable } from '@/components/admin/MovieTable/MovieTable';
+import { MovieTable } from '@/components/admin/Tables/MovieTable';
 import Link from 'next/link';
 
 export default function Movies() {
