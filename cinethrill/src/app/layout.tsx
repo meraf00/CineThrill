@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { poppins } from '@/libs/fonts';
 import './globals.css';
+import Providers from './providers';
+import { Toaster, ToastBar } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'CineThrill',
@@ -21,7 +23,10 @@ export default function RootLayout({
         id="body"
         className={`relative text-foreground ${poppins.className} font-normal bg-gradient-to-b from-blueblack to-blueblack-light w-full overflow-x-hidden bg-fixed overflow-y-auto h-full`}
       >
-        {children}
+        <Providers>
+          <Toaster position="top-right"></Toaster>
+          {children}
+        </Providers>
       </body>
     </html>
   );

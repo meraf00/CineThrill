@@ -41,6 +41,7 @@ export const Input = (
         htmlFor={props.id}
         className={
           `absolute 
+          pointer-events-none
             peer-focus:top-0 peer-focus:left-0 peer-focus:-translate-y-[80%] peer-focus:px-0                       
             text-xs p-3 left-0 opacity-80
             transition-all duration-300 ease-in-out ` + className

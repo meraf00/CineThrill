@@ -5,7 +5,7 @@ import { TableHead } from '../../Tables/TableHead';
 import { TableBody } from '../../Tables/TableBody';
 import { Row } from '../../Tables/Row';
 import Image from 'next/image';
-import { Movie } from '@/api/models/movie';
+import { Movie } from '@/libs/models/movie';
 
 export interface MovieTableProps {
   movies: Movie[];

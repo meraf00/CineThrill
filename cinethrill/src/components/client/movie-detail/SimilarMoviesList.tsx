@@ -1,6 +1,6 @@
 'use client';
 
-import { Movie } from '@/api/models/movie';
+import { Movie } from '@/libs/models/movie';
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Poster } from './Poster';
 

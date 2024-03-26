@@ -1,4 +1,4 @@
-import { Seat } from '@/api/models/seat';
+import { Seat } from '@/libs/models/seat';
 import { SolarSofaBroken } from '@/components/Icons';
 import React, { useState } from 'react';
 

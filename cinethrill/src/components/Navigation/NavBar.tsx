@@ -6,6 +6,7 @@ import { GgProfile, IconParkOutlineSearch } from '../Icons';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { DropDown } from './DropDown';
+import { useUserStore } from '@/store/userStore';
 
 type Section = 'popular' | 'top-rated' | 'new-release' | 'upcoming' | null;
 
@@ -13,7 +14,14 @@ export const NavBar = () => {
   const [activeSection, setActiveSection] = useState<Section>(null);
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
-  const isLoggedIn = true;
+  const loadUser = useUserStore((state) => state.loadUser);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  const user = useUserStore((state) => state.user);
+  const isLoggedIn = user !== null;
 
   useEffect(() => {
     const handleScroll = () => {

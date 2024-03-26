@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        'gradient-primary': `conic-gradient(#A6A7A900, #13C6B3, #ff501d00 20%)`,
+      }),
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
       colors: {
         foreground: {
           DEFAULT: '#F8FCFB',

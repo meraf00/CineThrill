@@ -6,7 +6,7 @@ import { TableFooter } from '../../Tables/TableFooter';
 import { TableHead } from '../../Tables/TableHead';
 import { TableBody } from '../../Tables/TableBody';
 import { Row } from '../../Tables/Row';
-import { Showtime } from '@/api/models/showtime';
+import { Showtime } from '@/libs/models/showtime';
 import { useRouter } from 'next/navigation';
 import { yyyyMMdd } from '@/libs/utils/time-formatter';
 

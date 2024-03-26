@@ -1,9 +1,8 @@
 'use client';
 
 import { Input } from '@/components/Input/Input';
-import { Select } from '@/components/Input/Select';
 import { Button } from '@/components/Button/Button';
-import { Seat } from '@/api/models/seat';
+import { Seat } from '@/libs/models/seat';
 import Image from 'next/image';
 import {
   ChangeEvent,
@@ -22,11 +21,22 @@ export interface HallFormProps {
   seats?: Seat[];
 }
 
+interface DragState {
+  x: number;
+  y: number;
+  isDragging: boolean;
+}
+
 export default function HallForm(props: HallFormProps) {
   const [file, setFile] = useState<string | null>(null);
   const [seats, setSeats] = useState<Seat[]>([]);
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [dragState, setDragState] = useState<DragState>({
+    x: 0,
+    y: 0,
+    isDragging: false,
+  });
   const canvasRef = useRef(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,65 +69,88 @@ export default function HallForm(props: HallFormProps) {
     ]);
   };
 
-  const handleDragSeat = (e: DragEvent<HTMLDivElement>, seatId: string) => {
-    if (isAdding) return;
-
-    if (!canvasRef.current) return;
-
-    const { top, left } = (
-      canvasRef.current as HTMLDivElement
-    ).getBoundingClientRect();
-
-    const c = e.clientX - left;
-    const r = e.clientY - top;
-
-    setSeats((seats) => {
-      const current = seats.filter((seat) => seat.id === seatId)[0];
-      const other = seats.filter((seat) => seat.id !== seatId);
-
-      const seat = Object.assign({}, current);
-      seat.column = c;
-      seat.row = r;
-
-      console.log(seat);
-      console.log(other);
-
-      return [...other, seat];
+  const onSeatDragStart = (e: DragEvent<HTMLDivElement>, seatId: string) => {
+    setDragState({
+      x: e.clientX,
+      y: e.clientY,
+      isDragging: selectedSeats.includes(seatId),
     });
   };
 
-  const handleMoveSeat = (e: KeyboardEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const onSeatDragEnd = (e: DragEvent<HTMLDivElement>) => {
+    if (isAdding || !dragState.isDragging) return;
 
-    const targets = seats.filter((seat) => selectedSeats.includes(seat.id));
+    if (!canvasRef.current) return;
 
-    if (targets.length === 0) return;
+    const dx = e.clientX - (dragState as DragState).x;
+    const dy = e.clientY - (dragState as DragState).y;
 
-    const moved = targets.map((seat) => {
-      const newSeat = Object.assign({}, seat);
+    moveSelectedSeats(dx, dy);
+    setDragState({ x: 0, y: 0, isDragging: false });
+  };
 
-      if (e.key === 'ArrowUp') {
-        newSeat.row -= 1;
-      } else if (e.key === 'ArrowDown') {
-        newSeat.row += 1;
-      } else if (e.key === 'ArrowLeft') {
-        newSeat.column -= 1;
-      } else if (e.key === 'ArrowRight') {
-        newSeat.column += 1;
-      }
-
-      return newSeat;
-    });
+  const moveSelectedSeats = (dx: number, dy: number) => {
+    const moved = seats
+      .filter((seat) => selectedSeats.includes(seat.id))
+      .map((seat) => {
+        const newSeat = Object.assign({}, seat);
+        newSeat.column += dx;
+        newSeat.row += dy;
+        return newSeat;
+      });
 
     setSeats((seats) => {
       const other = seats.filter((seat) => !selectedSeats.includes(seat.id));
-
       return [...other, ...moved];
     });
   };
 
-  const handleSelectSeat = (seatId: string) => {
+  const handleKeyboardShortcut = (e: KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    switch (e.key) {
+      case 'a':
+        setSelectedSeats(seats.map((seat) => seat.id));
+        break;
+      case 'd':
+        setSelectedSeats([]);
+        break;
+      case 'r':
+        setSelectedSeats((prevSelected) => {
+          const inverse = seats.filter(
+            (seat) => !prevSelected.includes(seat.id)
+          );
+          return inverse.map((seat) => seat.id);
+        });
+        break;
+      case 'ArrowUp':
+        moveSelectedSeats(0, -1);
+        break;
+      case 'ArrowDown':
+        moveSelectedSeats(0, 1);
+        break;
+      case 'ArrowLeft':
+        moveSelectedSeats(-1, 0);
+        break;
+      case 'ArrowRight':
+        moveSelectedSeats(1, 0);
+        break;
+      case 'Delete':
+        setSeats((seats) =>
+          seats.filter((seat) => !selectedSeats.includes(seat.id))
+        );
+        setSelectedSeats([]);
+        break;
+    }
+  };
+
+  const handleSelectSeat = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    seatId: string
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (selectedSeats.includes(seatId)) {
       setSelectedSeats((prev) => prev.filter((id) => id !== seatId));
     } else {
@@ -164,22 +197,22 @@ export default function HallForm(props: HallFormProps) {
           </div>
           <div
             ref={canvasRef}
-            className="w-1/2 h-80  cursor-pointer relative"
+            className="w-1/2 aspect-video cursor-pointer relative overflow-hidden"
             onMouseDown={handleAddSeats}
-            onKeyDown={handleMoveSeat}
+            onKeyDown={handleKeyboardShortcut}
             tabIndex={0}
           >
-            <div className="absolute w-full h-full  bg-blueblack bg-opacity-70">
+            <div className="absolute w-full h-full  bg-blueblack bg-opacity-70 aspect-video">
               {seats.map((seat, idx) => {
                 return (
                   <div
                     key={idx}
                     draggable={true}
-                    onDragEnd={(e) => {
-                      e.preventDefault();
-                      handleDragSeat(e, seat.id);
+                    onDragStart={(e) => {
+                      onSeatDragStart(e, seat.id);
                     }}
-                    onClick={(e) => handleSelectSeat(seat.id)}
+                    onDragEnd={onSeatDragEnd}
+                    onClick={(e) => handleSelectSeat(e, seat.id)}
                   >
                     <SolarSofaBroken
                       className={
@@ -194,6 +227,7 @@ export default function HallForm(props: HallFormProps) {
                           top: `${seat.row}`,
                           width: `${seat.width}px`,
                           height: `${seat.height}px`,
+                          pointerEvents: isAdding ? 'none' : 'auto',
                         } as React.CSSProperties
                       }
                     />
@@ -202,7 +236,7 @@ export default function HallForm(props: HallFormProps) {
               })}
             </div>
             <Image
-              className="object-contain w-full h-full"
+              className="object-contain w-full h-full aspect-video"
               src={file}
               alt=""
               width={1180}

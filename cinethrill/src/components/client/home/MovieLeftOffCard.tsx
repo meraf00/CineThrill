@@ -1,4 +1,4 @@
-import { Movie } from '@/api/models/movie';
+import { Movie } from '@/libs/models/movie';
 import Image from 'next/image';
 import React from 'react';
 

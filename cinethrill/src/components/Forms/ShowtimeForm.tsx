@@ -3,7 +3,7 @@
 import { Input } from '@/components/Input/Input';
 import { Select } from '@/components/Input/Select';
 import { Button } from '@/components/Button/Button';
-import { Movie } from '@/api/models/movie';
+import { Movie } from '@/libs/models/movie';
 
 export interface ShowtimeFormProps {
   movie?: Movie;
